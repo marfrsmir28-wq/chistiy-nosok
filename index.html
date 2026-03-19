@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Андеграундная стирка носков и шнурков в эстетике московских 90-х." />
+  <title>Мастерская «Чистый Носок»</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=PT+Mono&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #171411;
+      --paper: #c7b89d;
+      --paper-dark: #9b8e75;
+      --khaki: #7d7a55;
+      --rust: #a4512b;
+      --gum: #ae7c7f;
+      --black: #080808;
+      --acid: #98ff3f;
+      --red: #ff2a2a;
+      --line: rgba(0, 0, 0, 0.45);
+      --text: #181512;
+      --text-soft: #3a332d;
+      --shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+      --radius: 2px;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "PT Mono", "Courier New", monospace;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(174, 124, 127, 0.08), transparent 22%),
+        radial-gradient(circle at 78% 14%, rgba(164, 81, 43, 0.12), transparent 18%),
+        linear-gradient(180deg, #191613 0%, #14110f 100%);
+      color: var(--paper);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    body::before {
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.03) 0,
+          rgba(255,255,255,0.03) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      opacity: 0.28;
+      mix-blend-mode: soft-light;
+    }
+
+    body::after {
+      background-image:
+        radial-gradient(rgba(255,255,255,0.055) 0.65px, transparent 0.7px),
+        radial-gradient(rgba(0,0,0,0.12) 0.8px, transparent 0.9px);
+      background-size: 4px 4px, 7px 7px;
+      background-position: 0 0, 1px 2px;
+      opacity: 0.34;
+      mix-blend-mode: multiply;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max-width));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      backdrop-filter: blur(8px);
+      background: rgba(10, 9, 8, 0.72);
+      border-bottom: 1px solid rgba(199, 184, 157, 0.15);
+    }
+
+    .site-header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      font-family: "Bebas Neue", Impact, sans-serif;
+      letter-spacing: 0.08em;
+      font-size: clamp(1.5rem, 2.2vw, 2.2rem);
+      color: var(--paper);
+      white-space: nowrap;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #d4c8b0;
+      transition: color 0.2s ease, transform 0.2s ease;
+      position: relative;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible {
+      color: var(--red);
+      transform: translateY(-1px);
+    }
+
+    .nav a:nth-child(even):hover,
+    .nav a:nth-child(even):focus-visible {
+      color: var(--acid);
+    }
+
+    section {
+      padding: 72px 0;
+      position: relative;
+    }
+
+    .section-tag {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 5px 9px;
+      border: 1px solid rgba(199, 184, 157, 0.25);
+      color: #e5d5b7;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .hero {
+      padding-top: 48px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-visual,
+    .before-after-card,
+    .price-card,
+    .contact-card,
+    .map-card {
+      border: 1px solid rgba(199, 184, 157, 0.16);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy {
+      background:
+        linear-gradient(180deg, rgba(199,184,157,0.08), rgba(199,184,157,0.02)),
+        linear-gradient(135deg, rgba(125,122,85,0.18), rgba(0,0,0,0.08));
+      padding: 32px;
+    }
+
+    .hero-copy::after,
+    .before-after-card::after,
+    .price-card::after,
+    .contact-card::after,
+    .map-card::after,
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 0 92%, rgba(0,0,0,0.18) 100%);
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+
+    h1, h2, h3 {
+      font-family: "Bebas Neue", Impact, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 0.92;
+      color: #f0e0c2;
+    }
+
+    h1 {
+      font-size: clamp(3.8rem, 9vw, 7.5rem);
+      margin-bottom: 16px;
+      max-width: 9ch;
+    }
+
+    h2 {
+      font-size: clamp(2.3rem, 5vw, 4.2rem);
+      margin-bottom: 18px;
+    }
+
+    .hero-lead {
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      color: #ddd0b8;
+      margin-bottom: 20px;
+      max-width: 56ch;
+    }
+
+    .hero-text {
+      color: #d0c1a5;
+      line-height: 1.75;
+      max-width: 62ch;
+    }
+
+    .hero-note {
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px dashed rgba(199, 184, 157, 0.28);
+      color: #f1c89c;
+    }
+
+    .hero-visual {
+      min-height: 520px;
+      background:
+        linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.45)),
+        url('./assets/img/hero-washing-machine.jpg') center/cover no-repeat;
+      filter: grayscale(1) contrast(1.05) brightness(0.75);
+      position: relative;
+    }
+
+    .hero-visual .caption {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      right: 18px;
+      background: rgba(0, 0, 0, 0.52);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #ece0ca;
+      padding: 10px 12px;
+      font-size: 0.88rem;
+    }
+
+    .divider-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .divider-title::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, rgba(199,184,157,0.4), transparent);
+    }
+
+    .before-after-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .before-after-card {
+      background: #c9b997;
+      color: var(--text);
+    }
+
+    .polaroid {
+      padding: 14px;
+      background:
+        linear-gradient(180deg, #d8caad, #bca883);
+      min-height: 100%;
+    }
+
+    .polaroid-frame {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.18);
+      background: #918777;
+    }
+
+    .polaroid-frame img {
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.15) brightness(0.88) sepia(0.22);
+      transform: scale(1.03) rotate(-2.1deg);
+    }
+
+    .after-card .polaroid-frame img {
+      transform: scale(1.02) rotate(1.4deg);
+      filter: grayscale(0.9) contrast(1.05) brightness(0.98) sepia(0.35);
+    }
+
+    .stamp {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-family: "Bebas Neue", Impact, sans-serif;
+      letter-spacing: 0.08em;
+      font-size: 1.2rem;
+      padding: 4px 9px;
+      border: 2px solid rgba(121, 25, 25, 0.82);
+      color: rgba(121, 25, 25, 0.9);
+      background: rgba(255,255,255,0.12);
+      transform: rotate(-8deg);
+      z-index: 2;
+    }
+
+    .polaroid-body {
+      padding: 14px 2px 2px;
+    }
+
+    .polaroid h3 {
+      color: #15120f;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .polaroid p {
+      color: #342d25;
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+    }
+
+    .price-card {
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.05)),
+        linear-gradient(135deg, #6b6852, #332d25);
+      padding: 26px;
+    }
+
+    .matrix-board {
+      background:
+        linear-gradient(180deg, rgba(201,185,151,0.07), rgba(201,185,151,0.02)),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.045),
+          rgba(255,255,255,0.045) 1px,
+          transparent 1px,
+          transparent 21px
+        );
+      border: 1px solid rgba(201,185,151,0.18);
+      padding: 18px;
+    }
+
+    .price-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: baseline;
+      padding: 14px 0;
+      border-bottom: 1px dashed rgba(201,185,151,0.18);
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+
+    .price-row:last-child {
+      border-bottom: 0;
+    }
+
+    .price-row:hover {
+      color: var(--acid);
+      transform: translateX(4px);
+    }
+
+    .price-row:nth-child(odd):hover {
+      color: var(--red);
+    }
+
+    .price-name {
+      color: #f2e3c7;
+      line-height: 1.45;
+    }
+
+    .price-value {
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.06em;
+      color: #f4d4b2;
+      white-space: nowrap;
+    }
+
+    .pricing-note {
+      margin-top: 18px;
+      color: #dcc9ac;
+      line-height: 1.7;
+    }
+
+    .visa-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 8px 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.25);
+      color: #d8d1c3;
+      transform: rotate(-2deg);
+      font-size: 0.92rem;
+    }
+
+    .visa-badge i {
+      font-size: 1rem;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 0.8fr;
+      gap: 22px;
+    }
+
+    .contact-card,
+    .map-card {
+      padding: 26px;
+      background:
+        linear-gradient(180deg, rgba(199,184,157,0.06), rgba(199,184,157,0.02)),
+        linear-gradient(145deg, #302821, #171310);
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .contact-item {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 14px;
+      align-items: start;
+      color: #e5d6bb;
+      line-height: 1.65;
+    }
+
+    .contact-item i {
+      margin-top: 4px;
+      color: #f0c797;
+    }
+
+    .contact-item a:hover {
+      color: var(--red);
+    }
+
+    .map-card {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .black-square {
+      flex: 1;
+      min-height: 280px;
+      display: grid;
+      place-items: center;
+      background: #050505;
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-top: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .black-square::before {
+      content: "";
+      position: absolute;
+      inset: 10% 10%;
+      border: 1px dashed rgba(255,255,255,0.08);
+    }
+
+    .black-square span {
+      position: relative;
+      z-index: 1;
+      color: #c8bea9;
+      max-width: 18ch;
+      text-align: center;
+      line-height: 1.7;
+      padding: 16px;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(199,184,157,0.14);
+      padding: 24px 0 42px;
+      color: #a99d88;
+      font-size: 0.88rem;
+    }
+
+    .footer .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .small-caps {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 80%, 100% { opacity: 0.25; }
+      20%, 22% { opacity: 0.4; }
+      81% { opacity: 0.32; }
+    }
+
+    .hero-visual {
+      isolation: isolate;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), transparent 20%),
+        linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.42));
+      mix-blend-mode: screen;
+      pointer-events: none;
+      animation: flicker 5s linear infinite;
+      z-index: 0;
+    }
+
+    .hero-visual .caption {
+      z-index: 1;
+    }
+
+    .before-after-grid {
+      align-items: start;
+    }
+
+    .before-card {
+      transform: rotate(-0.35deg);
+    }
+
+    .after-card {
+      transform: rotate(0.45deg);
+    }
+
+    .visa-badge {
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 6px 6px 0 rgba(0,0,0,0.18);
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .pricing-grid,
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 380px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      section {
+        padding: 56px 0;
+      }
+
+      .site-header .container {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav {
+        justify-content: flex-start;
+      }
+
+      .before-after-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .price-card,
+      .contact-card,
+      .map-card {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: clamp(3.2rem, 16vw, 4.8rem);
+      }
+
+      h2 {
+        font-size: clamp(2rem, 11vw, 3rem);
+      }
+
+      .price-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .price-value {
+        font-size: 1.7rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .container {
+        width: min(calc(100% - 20px), var(--max-width));
+      }
+
+      .nav {
+        gap: 8px 12px;
+      }
+
+      .nav a {
+        font-size: 0.82rem;
+      }
+
+      .hero-visual {
+        min-height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="#hero">Чистый Носок</a>
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="#hero">Главная</a>
+        <a href="#before-after">До / После</a>
+        <a href="#pricing">Расценки</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <span class="section-tag">Московский андеграунд / 90-е</span>
+            <h1>Мастерская «Чистый Носок»</h1>
+            <p class="hero-lead">Андеграундная стирка ваших носков и шнурков. Недорого.</p>
+            <div class="hero-text">
+              <p>
+                Ручная работа. Дышим пылью истории, возвращаем свежесть. Каждая пара проходит ритуал очищения в лучших традициях московских прачечных. Это не просто стирка — это реставрация памяти ваших ног.
+              </p>
+              <p class="hero-note">
+                Экономьте время на дискотеки и разговоры по душам. Носки и шнурки возьмём на себя.
+              </p>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Фотография старой стиральной машины в черно-белом винтажном стиле">
+            <div class="caption">
+              Архивный кадр: машинка, простынь, шум подъезда и тихий гул позднего вечера.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="before-after">
+      <div class="container">
+        <div class="divider-title">
+          <h2>До / После</h2>
+        </div>
+        <div class="before-after-grid">
+          <article class="before-after-card before-card">
+            <div class="polaroid">
+              <div class="polaroid-frame">
+                <span class="stamp">ДО</span>
+                <img src="./assets/img/before-dirty-sock.jpg" alt="Грязный носок в сыром подвальном антураже" />
+              </div>
+              <div class="polaroid-body">
+                <h3>Подвал. Бетон. Реальность.</h3>
+                <p>
+                  Очень грязный носок, случайно переживший ночь, лестничную клетку и, возможно, один неудачный концерт. Снято криво, со вспышкой, без сожалений.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article class="before-after-card after-card">
+            <div class="polaroid">
+              <div class="polaroid-frame">
+                <span class="stamp">ПОСЛЕ</span>
+                <img src="./assets/img/after-clean-sock.jpg" alt="Чистый и аккуратно сложенный носок на старых газетах" />
+              </div>
+              <div class="polaroid-body">
+                <h3>Газеты. Порядок. Почти роскошь.</h3>
+                <p>
+                  Тот же носок, но теперь выглаженный, спокойный и готовый снова выйти в люди. Лежит как честный гражданин на стопке старой прессы.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="container">
+        <div class="divider-title">
+          <h2>Расценки</h2>
+        </div>
+        <div class="pricing-grid">
+          <div class="price-card">
+            <div class="matrix-board">
+              <div class="price-row">
+                <div class="price-name">Стирка пары носков</div>
+                <div class="price-value">50 ₽</div>
+              </div>
+              <div class="price-row">
+                <div class="price-name">Глажка пары носков</div>
+                <div class="price-value">35 ₽</div>
+              </div>
+              <div class="price-row">
+                <div class="price-name">Стирка шнурков (пара)</div>
+                <div class="price-value">20 ₽</div>
+              </div>
+              <div class="price-row">
+                <div class="price-name">Комплексный уход (носки + шнурки)</div>
+                <div class="price-value">100 ₽</div>
+              </div>
+            </div>
+            <p class="pricing-note">
+              Скидка за андеграундный образ жизни уже включена. Принимаем наличные и переводы на карту.
+            </p>
+          </div>
+
+          <aside class="price-card">
+            <span class="section-tag">Оплата / дисциплина / быт</span>
+            <h2>Без пафоса</h2>
+            <p class="pricing-note">
+              Цены выглядят так, будто их напечатал матричный принтер в подсобке, и именно так и должно быть. Чужеродный символ цивилизации тоже имеется.
+            </p>
+            <div class="visa-badge">
+              <i class="fa-brands fa-cc-visa" aria-hidden="true"></i>
+              <span>VISA принимаем. Странно, но факт.</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacts">
+      <div class="container">
+        <div class="divider-title">
+          <h2>Контакты</h2>
+        </div>
+        <div class="contact-layout">
+          <div class="contact-card">
+            <span class="section-tag">Найди, если сможешь</span>
+            <h2>Заходи без понтов</h2>
+            <div class="contact-list">
+              <div class="contact-item">
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                <div>Москва, м. Третьяковская, подворотня у «Киноцентра», далее по запаху хлорки.</div>
+              </div>
+              <div class="contact-item">
+                <i class="fa-regular fa-clock" aria-hidden="true"></i>
+                <div>Тусовка со вторника по субботу, с 14:00 до 20:00. Понедельник — «сухой день» (санитарный).</div>
+              </div>
+              <div class="contact-item">
+                <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                <div><a href="tel:+74951234567">+7 (495) 123-45-67</a> — можно повесить трубку.</div>
+              </div>
+              <div class="contact-item">
+                <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+                <div><a href="mailto:chistye.noski@90s.ru">chistye.noski@90s.ru</a></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="map-card" aria-label="Схематичная карта вместо реальной карты">
+            <span class="section-tag">Карта</span>
+            <h2>Без геолокации</h2>
+            <div class="black-square">
+              <span>Найди нас по запаху натрия</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="small-caps">Стирка &amp; Глажка 90х</div>
+      <div>Сделано грубо, стильно и с уважением к носкам.</div>
+    </div>
+  </footer>
+</body>
+</html>
